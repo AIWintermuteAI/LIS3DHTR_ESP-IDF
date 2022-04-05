@@ -66,13 +66,16 @@ void LIS3DHTR::begin(uint8_t address)
     writeRegister(LIS3DHTR_REG_TEMP_CFG, config5);
     DELAY(LIS3DHTR_CONVERSIONDELAY);
 
+    if(isConnection() == false) {
+        return;
+    }
+
     uint8_t config1 = LIS3DHTR_REG_ACCEL_CTRL_REG1_LPEN_NORMAL | // Normal Mode
                       LIS3DHTR_REG_ACCEL_CTRL_REG1_AZEN_ENABLE | // Acceleration Z-Axis Enabled
                       LIS3DHTR_REG_ACCEL_CTRL_REG1_AYEN_ENABLE | // Acceleration Y-Axis Enabled
                       LIS3DHTR_REG_ACCEL_CTRL_REG1_AXEN_ENABLE;
 
     writeRegister(LIS3DHTR_REG_ACCEL_CTRL_REG1, config1);
-
     DELAY(LIS3DHTR_CONVERSIONDELAY);
 
     uint8_t config4 = LIS3DHTR_REG_ACCEL_CTRL_REG4_BDU_NOTUPDATED | // Continuous Update
@@ -82,7 +85,6 @@ void LIS3DHTR::begin(uint8_t address)
                       LIS3DHTR_REG_ACCEL_CTRL_REG4_SIM_4WIRE;       // 4-Wire Interface
 
     writeRegister(LIS3DHTR_REG_ACCEL_CTRL_REG4, config4);
-
     DELAY(LIS3DHTR_CONVERSIONDELAY);
 
     setFullScaleRange(LIS3DHTR_RANGE_16G);
