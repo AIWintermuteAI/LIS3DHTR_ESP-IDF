@@ -50,9 +50,11 @@ void LIS3DHTR::begin(uint8_t address)
         .scl_io_num = I2C_MASTER_SCL_IO,
         .sda_pullup_en = GPIO_PULLUP_ENABLE,
         .scl_pullup_en = GPIO_PULLUP_ENABLE,
+        .master = {
+            .clk_speed = I2C_MASTER_FREQ_HZ
+        },
+        .clk_flags = I2C_SCLK_SRC_FLAG_FOR_NOMAL
     };
-
-    conf.master.clk_speed = I2C_MASTER_FREQ_HZ;
 
     i2c_param_config(i2c_master_port, &conf);
 
